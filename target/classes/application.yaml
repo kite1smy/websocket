@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+
+#配置日志
+logging:
+  #指定不同目录下的日志的级别
+  level:
+    org.kite: debug
