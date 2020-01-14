@@ -1,6 +1,5 @@
 package org.kite.controller;
 
-import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +26,8 @@ public class WebSocketController {
     /**
      * 用来记录当前连接数的变量
      */
-    private static OnlineCount onlineCount = new OnlineCount();
+    private static CountObservable onlineCount = new CountObservable();
+
 
     /**
      * 保存 组id->组成员 的映射关系
@@ -35,7 +35,7 @@ public class WebSocketController {
     private static ConcurrentHashMap<String, List<Session>> groupMemberInfoMap = new ConcurrentHashMap<>();
 
 
-    private void broadcast(String id, String msg) {
+    private static void broadcast(String id, String msg) {
         List<Session> sessionList = groupMemberInfoMap.get(id);
         sessionList.forEach(session -> {
             try {
@@ -51,13 +51,27 @@ public class WebSocketController {
 
     @OnOpen
     public void onOpen(Session session, @PathParam("id") String id, @PathParam("name") String name) throws Exception {
-        List<Session> sessionList = groupMemberInfoMap.computeIfAbsent(id, k -> new ArrayList<>());
+
+
+        List<Session> sessionList = groupMemberInfoMap.get(id);
+        if (sessionList == null) {
+            synchronized (WebSocketController.class) {
+                if (groupMemberInfoMap.get(id) == null) {
+                    sessionList = new ArrayList<>();
+                    groupMemberInfoMap.put(id, sessionList);
+                    onlineCount
+                            .getObservable()
+                            .subscribe((count) -> broadcast(id, "在线人数: " + count));
+                }
+
+            }
+        }
         sessionList.add(session);
 
         log.info("Connection connected  sid: {}, sessionList size: {}", id, sessionList.size());
 
         onlineCount.incrementAndGet();
-        onlineCount.subscribe(session);
+
     }
 
     @OnClose
@@ -68,6 +82,15 @@ public class WebSocketController {
         log.info("Connection closed sid: {}, sessionList size: {}", id, sessionList.size());
 
         sessionList.remove(session);
+        if (sessionList.size() == 0) {
+            synchronized (WebSocketController.class) {
+                if (sessionList.size() == 0) {
+                    groupMemberInfoMap.remove(id);
+
+                }
+            }
+        }
+
         onlineCount.decrementAndGet();
 
     }
@@ -83,27 +106,21 @@ public class WebSocketController {
         log.error("Error while websocket. ", error);
     }
 
-    private static class OnlineCount {
+    /**
+     * 定义一个可被观察的计数器
+     * 当计数器的值发生变化的时候,向他的订阅者们发送事件
+     */
+    private static class CountObservable {
+        /**
+         * 计数器
+         */
         private static AtomicInteger onlineCount = new AtomicInteger();
 
+        /**
+         * 可被观察对象
+         */
         private BehaviorSubject<Integer> subject = BehaviorSubject.create();
 
-        void subscribe(Session session) {
-
-            Disposable dispose;
-            dispose = subject.subscribe(integer -> {
-                if (session.isOpen()) {
-                    Optional.of(session)
-                            .map(Session::getBasicRemote)
-                            .get()
-                            .sendText("在线人数: " + integer);
-                } else {
-//                    dispose.dispose();
-                }
-            });
-
-
-        }
 
         void incrementAndGet() {
             subject.onNext(
@@ -115,6 +132,10 @@ public class WebSocketController {
             subject.onNext(
                     onlineCount.decrementAndGet()
             );
+        }
+
+        BehaviorSubject<Integer> getObservable() {
+            return this.subject;
         }
     }
 
