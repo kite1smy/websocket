@@ -4,7 +4,8 @@
     <list default="true" id="2532701f-f679-4458-a168-c0246b9eb3ed" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/kite/controller/WebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/kite/controller/WebSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/kite/controller/WebSocketController$OnlineCount.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/kite/controller/WebSocketController$CountObservable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/kite/controller/WebSocketController$CountObservable.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/kite/controller/WebSocketController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/kite/controller/WebSocketController.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -41,12 +42,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/kite/controller/WebSocketController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="58" column="57" lean-forward="true" selection-start-line="58" selection-start-column="57" selection-end-line="58" selection-end-column="57" />
+            <state relative-caret-position="483">
+              <caret line="52" column="44" lean-forward="true" selection-start-line="52" selection-start-column="44" selection-end-line="52" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3159#3160#0" expanded="true" />
-                <element signature="e#3873#3874#0" expanded="true" />
+                <element signature="e#2453#2454#0" expanded="true" />
+                <element signature="e#3167#3168#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,6 +70,15 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/static/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="262">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
@@ -110,8 +120,8 @@
         <option value="$PROJECT_DIR$/src/main/java/org/kite/configuration/Wea.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/kite/configuration/WebSocketConfig.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.yaml" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/index.html" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/org/kite/controller/WebSocketController.java" />
       </list>
     </option>
@@ -154,8 +164,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="277" />
-    <option name="y" value="147" />
+    <option name="x" value="233" />
+    <option name="y" value="120" />
     <option name="width" value="1797" />
     <option name="height" value="1184" />
   </component>
@@ -640,15 +650,15 @@
       <workItem from="1578735253047" duration="950000" />
       <workItem from="1578736239628" duration="3233000" />
       <workItem from="1578882026237" duration="2273000" />
-      <workItem from="1578895862238" duration="18713000" />
+      <workItem from="1578895862238" duration="20825000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49891000" />
+    <option name="totallyTimeSpent" value="52003000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="277" y="147" width="1797" height="1184" extended-state="0" />
+    <frame x="233" y="120" width="1797" height="1184" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49610388" visible="true" weight="0.22735043" />
@@ -675,7 +685,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="12" weight="0.32937956" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
       <window_info anchor="bottom" id="Version Control" order="14" weight="0.32967034" />
-      <window_info anchor="bottom" id="JRebel Executor" order="15" sideWeight="0.49971214" weight="0.24175824" />
+      <window_info active="true" anchor="bottom" id="JRebel Executor" order="15" sideWeight="0.49971214" visible="true" weight="0.29578754" />
       <window_info anchor="bottom" id="JRebel Console" order="16" sideWeight="0.50028783" side_tool="true" weight="0.32937956" />
       <window_info anchor="bottom" id="Messages" order="17" weight="0.19322345" />
       <window_info anchor="bottom" id="Problems" order="18" weight="0.32937956" />
@@ -745,13 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="65" selection-start-line="14" selection-start-column="65" selection-end-line="14" selection-end-column="65" />
         </state>
       </provider>
     </entry>
@@ -929,6 +932,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/io/reactivex/rxjava2/rxjava/2.2.15/rxjava-2.2.15-sources.jar!/io/reactivex/functions/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/kite/websocket/MsgHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-193">
@@ -939,21 +949,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/io/reactivex/rxjava2/rxjava/2.2.15/rxjava-2.2.15-sources.jar!/io/reactivex/functions/Consumer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+        <state relative-caret-position="262">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/kite/controller/WebSocketController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="58" column="57" lean-forward="true" selection-start-line="58" selection-start-column="57" selection-end-line="58" selection-end-column="57" />
+        <state relative-caret-position="483">
+          <caret line="52" column="44" lean-forward="true" selection-start-line="52" selection-start-column="44" selection-end-line="52" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3159#3160#0" expanded="true" />
-            <element signature="e#3873#3874#0" expanded="true" />
+            <element signature="e#2453#2454#0" expanded="true" />
+            <element signature="e#3167#3168#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -8,8 +8,6 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author kite
  * @date 2020/01/01
  */
-@ServerEndpoint("/websocket/{id}/{name}")
+@ServerEndpoint("/websocket/{name}")
 @RestController
 @Slf4j
 public class WebSocketController {
@@ -28,68 +26,54 @@ public class WebSocketController {
      */
     private static CountObservable onlineCount = new CountObservable();
 
+    /**
+     * 开始订阅
+     */
+    static {
+        onlineCount
+                .getObservable()
+                .subscribe((counter) -> broadcast("在线人数: " + counter));
+    }
 
     /**
-     * 保存 组id->组成员 的映射关系
+     * 保存 用户名 -> session
      */
-    private static ConcurrentHashMap<String, List<Session>> groupMemberInfoMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, Session> contextHolder = new ConcurrentHashMap<>();
 
-
-    private static void broadcast(String id, String msg) {
-        List<Session> sessionList = groupMemberInfoMap.get(id);
-        sessionList.forEach(session -> {
-            try {
-                Optional.of(session)
-                        .map(Session::getBasicRemote)
-                        .get()
-                        .sendText(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+    private static void broadcast(String msg) {
+        contextHolder
+                .values()
+                .forEach(session -> {
+                    try {
+                        if (session.isOpen()) {
+                            Optional
+                                    .of(session)
+                                    .map(Session::getBasicRemote)
+                                    .get()
+                                    .sendText(msg);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("id") String id, @PathParam("name") String name) throws Exception {
+    public void onOpen(Session session, @PathParam("name") String name) throws Exception {
 
+        log.info("Connection connected  name: {}", name);
 
-        List<Session> sessionList = groupMemberInfoMap.get(id);
-        if (sessionList == null) {
-            synchronized (WebSocketController.class) {
-                if (groupMemberInfoMap.get(id) == null) {
-                    sessionList = new ArrayList<>();
-                    groupMemberInfoMap.put(id, sessionList);
-                    onlineCount
-                            .getObservable()
-                            .subscribe((count) -> broadcast(id, "在线人数: " + count));
-                }
-
-            }
-        }
-        sessionList.add(session);
-
-        log.info("Connection connected  sid: {}, sessionList size: {}", id, sessionList.size());
+        contextHolder.put(name, session);
 
         onlineCount.incrementAndGet();
-
     }
 
     @OnClose
-    public void onClose(Session session, @PathParam("id") String id) {
+    public void onClose(Session session, @PathParam("name") String name) {
 
-        List<Session> sessionList = groupMemberInfoMap.get(id);
+        log.info("Connection disconnected  name: {}", name);
 
-        log.info("Connection closed sid: {}, sessionList size: {}", id, sessionList.size());
-
-        sessionList.remove(session);
-        if (sessionList.size() == 0) {
-            synchronized (WebSocketController.class) {
-                if (sessionList.size() == 0) {
-                    groupMemberInfoMap.remove(id);
-
-                }
-            }
-        }
+        contextHolder.remove(name, session);
 
         onlineCount.decrementAndGet();
 
@@ -97,8 +81,7 @@ public class WebSocketController {
 
     @OnMessage
     public void onMessage(String message, Session session, @PathParam("id") String id, @PathParam("name") String name) throws IOException {
-        List<Session> sessionList = groupMemberInfoMap.get(id);
-        broadcast(id, name + " : " + message);
+        broadcast(name + " : " + message);
     }
 
     @OnError

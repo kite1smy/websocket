@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Testing WebSockets</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 </head>
 <body>
 <div>
@@ -12,7 +13,7 @@
 <div id="messages"></div>
 <script type="text/javascript">
     var webSocket =
-        new WebSocket(`ws://localhost:8081/websocket/1/a${new Date().getTime()}`);
+        new WebSocket(`ws://localhost:8081/websocket/用户${new Date().getTime()}`);
 
     webSocket.onerror = function (event) {
         onError(event)
